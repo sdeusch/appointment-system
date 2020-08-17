@@ -92,8 +92,8 @@ alert('User already registered. Please try again');
         <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
         <!-- <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />  -->
 
-        <!--Font Awesome (added because you use icons in your prepend/append)-->
-        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <!--Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
         <link href="assets/css/material.css" rel="stylesheet">
     </head>
     <body>
@@ -108,7 +108,7 @@ alert('User already registered. Please try again');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.php"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
+                    <h3><a class="col-xs-2" href="index.php"> <span class="fa fa-spa">Tajik</span> </a></h3>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -383,67 +383,91 @@ alert('User already registered. Please try again');
         <!-- third section start -->
         
         <!-- third section end -->
+        <div class="site-section">
+
         <!-- forth sections start -->
         <section id="content-1-9" class="content-1-9 content-block">
             <div class="container">
                 <div class="underlined-title">
-                    <h1>Get in Touch</h1>
+                    <h1>Unser Angebot</h1>
                     <hr>
-                    <h2>Feel free to drop us a line to contact us</h2>
+                    <h2>Wir praktizieren ganzheitliche Behandlungen. Das inkludiert klassische Massagen, 
+                    Lymphdrainagen, und alternative Methoden. Buchen Sie jetzt Ihren Termin online. </h2>
                 </div>
                 <div class="row">
+                     
                     <div class="col-md-4 col-sm-12 col-xs-12 pad25">
-                        <div class="col-xs-2">
-                            <span class="fa fa-pencil"></span>
+                        <div class="col-xs-12">
+                            <a  href="#"><img src="assets/img/img_1.jpg" alt="Massage Image" class="content-1-7 col-xs-12 img-fluid"></a>
                         </div>
+                        <div class="col-xs-2">
+                            <span class="fa fa-spa"></span>
+                         </div>
                         <div class="col-xs-10">
-                            <h4>Branding</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
+                           
+                            <h4>Klassisch</h4>
+                            <p>Die klassische Massage – häufig auch als schwedische Massage bezeichnet – wird heute von unzähligen ausgebildeten Masseuren auf der ganzen Welt angewandt.</p>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12 pad25">
-                        <div class="col-xs-2">
-                            <span class="fa fa-code"></span>
+                        <div class="col-xs-12">
+                            <a  href="#"><img src="assets/img/img_2.jpg" alt="Massage Image" class="content-1-7 col-xs-12 img-fluid"></a>
                         </div>
+                        <div class="col-xs-2">
+                            <span class="fa fa-gem"></span>
+                         </div>
                         <div class="col-xs-10">
-                            <h4>Web Design</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
+                            <h4>Manipulativ</h4>
+                            <p>Die Manipulativmassage & Heilmassage geht auf eine Therapie des Schweizer Arztes Dr. Terrier zurück. Es handelt sich um eine mobilisierende Massage der Weichteile an Gelenken und Wirbelsäule.</p>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12 pad25">
+                        <div class="col-xs-12">
+                            <a  href="#"><img src="assets/img/img_3.jpg" alt="Massage Image" class="content-1-7 col-xs-12 img-fluid"></a>
+                        </div>
                         <div class="col-xs-2">
-                            <span class="fa fa-comments-o"></span>
+                             <span class="fa fa-bullseye"></span>
                         </div>
                         <div class="col-xs-10">
-                            <h4>Social Marketing</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
+                            <h4>Fuß Reflexzonen</h4>
+                            <p>Die Füße sind nach landläufiger Meinung gerne so etwas wie das Stiefkind unseres Körpers. Erst wenn sie einmal schmerzen oder ihre Funktion nicht wie gewohnt ausüben, fällt uns auf, welche Schwerarbeit sie Tag für Tag für uns leisten.</p>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12 pad25">
+                        <div class="col-xs-12">
+                            <a  href="#"><img src="assets/img/img_4.jpg" alt="Massage Image" class="content-1-7 col-xs-12 img-fluid"></a>
+                        </div>
                         <div class="col-xs-2">
-                            <span class="fa fa-search"></span>
+                             <span class="fa fa-cannabis"></span>
                         </div>
                         <div class="col-xs-10">
-                            <h4>SEO</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
+                            <h4>Bindegewebe</h4>
+                            <p>Die Bindegewebsmassage geht auf eine Entwicklung von Elisabeth Dicke zurück. Bereits im Jahr 1929 fand sie heraus, dass mit dieser speziellen Massage – auch als Subcutane Reflex Therapie SRT bezeichnet – eine Beeinflussung funktioneller Störungen im gesamten Organismus möglich ist.</p>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12 pad25">
+                        <div class="col-xs-12">
+                            <a  href="#"><img src="assets/img/img_5.jpg" alt="Massage Image" class="content-1-7 col-xs-12 img-fluid"></a>
+                        </div>
                         <div class="col-xs-2">
-                            <span class="fa fa-mobile"></span>
+                            <span class="fa fa-hand-sparkles"></span>
                         </div>
                         <div class="col-xs-10">
-                            <h4>Mobile Apps</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
+                            <h4>Fett Weg</h4>
+                            <p>Erfunden von einem unbekannten Semmelbäcker im Hofe von Kaiserin Maria Theresia, diese Methode hat sich bewährt bei jung und alt, arm und reich (eher aber bei reich). Lassen Sie uns ihr extra Fett wegmassieren, buchstäblich im Handumdrehen.</p>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12 pad25">
+                       <div class="col-xs-12">
+                            <a  href="#"><img src="assets/img/img_6.jpg" alt="Massage Image" class="content-1-7 col-xs-12 img-fluid"></a>
+                        </div>
                         <div class="col-xs-2">
-                            <span class="fa fa-bookmark"></span>
+                            <span class="fa fa-pastafarianism"></span>
                         </div>
                         <div class="col-xs-10">
-                            <h4>Corporate Literture</h4>
-                            <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
+                            <h4>Blutegel</h4>
+                            <p>Die ultimative Methode entwickelt über Milliarden Jahren von biologischer Evolution. 
+                            überlassen sie ihre Pickeln unseren blutrünstigen Würmern und fühlen Sie sich wie ein neugeborenes Baby, garantiert!</p>
                         </div>
                     </div>
                 </div>
@@ -451,12 +475,13 @@ alert('User already registered. Please try again');
             </div>
             <!-- /.container -->
         </section>
+        
         <!-- forth section end -->
         <!-- footer start -->
         <div class="copyright-bar bg-black">
             <div class="container">
-                <p class="pull-left small">© mohd mazlan - codedesign</p>
-                <p class="pull-right small"><a href="adminlogin.php">admin</a></p>
+                <p class="pull-left small">© lukas deusch - <?= date("Y") ?></p>
+                <p class="pull-right small"><a href="adminlogin.php">admin login</a></p>
             </div>
         </div>
         <!-- footer end -->
@@ -467,6 +492,8 @@ alert('User already registered. Please try again');
     <script src="assets/js/moment.js"></script>
     <script src="assets/js/transition.js"></script>
     <script src="assets/js/collapse.js"></script>
+
+    <link href="/your-path-to-fontawesome/css/all.css" rel="stylesheet" 
      <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript">
