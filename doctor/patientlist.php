@@ -7,7 +7,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
+$res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
@@ -23,7 +23,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></title>
+        <title>Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></title>
         <!-- Bootstrap Core CSS -->
         <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
         <link href="assets/css/material.css" rel="stylesheet">
@@ -48,14 +48,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></a>
+                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     
                     
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['firstName']; ?> <?php echo $userRow['lastName']; ?><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -127,10 +127,10 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr class="filters">
-                                    <th><input type="text" class="form-control" placeholder="patient Ic" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="ID" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Name" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Password" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="ContactNo." disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Phone" disabled></th>
                                     <!-- <th><input type="text" class="form-control" placeholder="Email" disabled></th> -->
                                     <th><input type="text" class="form-control" placeholder="Gender" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Status" disabled></th>
@@ -149,8 +149,8 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                               
                                 echo "<tbody>";
                                 echo "<tr>";
-                                    echo "<td>" . $patientRow['icPatient'] . "</td>";
-                                    echo "<td>" . $patientRow['patientLastName'] . "</td>";
+                                    echo "<td>" . $patientRow['id'] . "</td>";
+                                    echo "<td>" . $patientRow['patientFirstName']  .' ' . $patientRow['patientLastName'] . "</td>";
                                     echo "<td>" . $patientRow['password'] . "</td>";
                                     echo "<td>" . $patientRow['patientPhone'] . "</td>";
                                     // echo "<td>" . $patientRow['patientEmail'] . "</td>";
@@ -159,7 +159,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     echo "<td>" . $patientRow['patientDOB'] . "</td>";
                                     echo "<td>" . $patientRow['patientAddress'] . "</td>";
                                     echo "<form method='POST'>";
-                                    echo "<td class='text-center'><a href='#' id='".$patientRow['icPatient']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
+                                    echo "<td class='text-center'><a href='#' id='".$patientRow['id']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
                             </td>";
                                
                             } 

@@ -7,7 +7,8 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
+$therapist_id = $usersession;
+$res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 // insert
 
@@ -17,14 +18,14 @@ $date = mysqli_real_escape_string($con,$_POST['date']);
 $scheduleday  = mysqli_real_escape_string($con,$_POST['scheduleday']);
 $starttime     = mysqli_real_escape_string($con,$_POST['starttime']);
 $endtime     = mysqli_real_escape_string($con,$_POST['endtime']);
-$bookavail         = mysqli_real_escape_string($con,$_POST['bookavail']);
+$bookavail   = mysqli_real_escape_string($con,$_POST['bookavail']);
 
 //INSERT
-$query = " INSERT INTO doctorschedule (  scheduleDate, scheduleDay, startTime, endTime,  bookAvail)
-VALUES ( '$date', '$scheduleday', '$starttime', '$endtime', '$bookavail' ) ";
+$query = " INSERT INTO therapist_schedule ( therapist_id , schedule_date, schedule_day, start_time, end_time,  is_available)
+VALUES ( $therapist_id , '$date', '$scheduleday', '$starttime', '$endtime', true) ";
 
 $result = mysqli_query($con, $query);
-// echo $result;
+
 if( $result )
 {
 ?>
@@ -37,7 +38,7 @@ else
 {
 ?>
 <script type="text/javascript">
-alert('Added fail. Please try again.');
+ alert('Added fail. Please try again.');
 </script>
 <?php
 }
@@ -56,7 +57,7 @@ alert('Added fail. Please try again.');
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></title>
+        <title>Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></title>
         <!-- Bootstrap Core CSS -->
         <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
         <link href="assets/css/material.css" rel="stylesheet">
@@ -89,14 +90,14 @@ alert('Added fail. Please try again.');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></a>
+                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     
                     
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['firstName']; ?> <?php echo $userRow['lastName']; ?><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="doctorprofile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -287,7 +288,7 @@ alert('Added fail. Please try again.');
 
                         <!-- panel heading starat -->
                         <div class="panel-heading">
-                            <h3 class="panel-title">List of Patients</h3>
+                            <h3 class="panel-title">List of Schedules</h3>
                             <div class="pull-right">
                             <button class="btn btn-default btn-xs btn-filter"><span class="fa fa-filter"></span> Filter</button>
                         </div>
@@ -310,7 +311,7 @@ alert('Added fail. Please try again.');
                             </thead>
                             
                             <?php 
-                            $result=mysqli_query($con,"SELECT * FROM doctorschedule");
+                            $result=mysqli_query($con,"SELECT * FROM therapist_schedule");
                             
 
                                   
@@ -319,14 +320,14 @@ alert('Added fail. Please try again.');
                               
                                 echo "<tbody>";
                                 echo "<tr>";
-                                    echo "<td>" . $doctorschedule['scheduleId'] . "</td>";
-                                    echo "<td>" . $doctorschedule['scheduleDate'] . "</td>";
-                                    echo "<td>" . $doctorschedule['scheduleDay'] . "</td>";
-                                    echo "<td>" . $doctorschedule['startTime'] . "</td>";
-                                    echo "<td>" . $doctorschedule['endTime'] . "</td>";
-                                    echo "<td>" . $doctorschedule['bookAvail'] . "</td>";
+                                    echo "<td>" . $doctorschedule['id'] . "</td>";
+                                    echo "<td>" . $doctorschedule['schedule_date'] . "</td>";
+                                    echo "<td>" . $doctorschedule['schedule_day'] . "</td>";
+                                    echo "<td>" . $doctorschedule['start_time'] . "</td>";
+                                    echo "<td>" . $doctorschedule['end_time'] . "</td>";
+                                    echo "<td>" . $doctorschedule['is_available'] . "</td>";
                                     echo "<form method='POST'>";
-                                    echo "<td class='text-center'><a href='#' id='".$doctorschedule['scheduleId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
+                                    echo "<td class='text-center'><a href='#' id='".$doctorschedule['id']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
                             </td>";
                                
                             } 

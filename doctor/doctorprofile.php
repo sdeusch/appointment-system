@@ -7,7 +7,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
+$res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
@@ -19,7 +19,7 @@ $doctorPhone = $_POST['doctorPhone'];
 $doctorEmail = $_POST['doctorEmail'];
 $doctorAddress = $_POST['doctorAddress'];
 
-$res=mysqli_query($con,"UPDATE doctor SET doctorFirstName='$doctorFirstName', doctorLastName='$doctorLastName', doctorPhone='$doctorPhone', doctorEmail='$doctorEmail', doctorAddress='$doctorAddress' WHERE doctorId=".$_SESSION['doctorSession']);
+$res=mysqli_query($con,"UPDATE therapist SET firstName='$doctorFirstName', lastName='$doctorLastName', phone='$doctorPhone', email='$doctorEmail', address='$doctorAddress' WHERE id=".$_SESSION['doctorSession']);
 // $userRow=mysqli_fetch_array($res);
 
 header( 'Location: doctorprofile.php' ) ;
@@ -39,7 +39,7 @@ header( 'Location: doctorprofile.php' ) ;
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></title>
+        <title>Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></title>
         <!-- Bootstrap Core CSS -->
         <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
         <link href="assets/css/material.css" rel="stylesheet">
@@ -64,14 +64,14 @@ header( 'Location: doctorprofile.php' ) ;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></a>
+                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     
                     
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['firstName']; ?> <?php echo $userRow['lastName']; ?><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="doctorprofile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -142,7 +142,7 @@ header( 'Location: doctorprofile.php' ) ;
                             <div class="user-wrapper">
                                 <img src="assets/img/1.jpg" class="img-responsive" />
                                 <div class="description">
-                                    <h4><?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?></h4>
+                                    <h4><?php echo $userRow['firstName']; ?> <?php echo $userRow['lastName']; ?></h4>
                                     <h5> <strong> Doctor </strong></h5>
                                     
                                     <hr />
@@ -153,7 +153,7 @@ header( 'Location: doctorprofile.php' ) ;
                         
                         <div class="col-md-9 col-sm-9  user-wrapper">
                             <div class="description">
-                                <h3> <?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?> </h3>
+                                <h3> <?php echo $userRow['firstName']; ?> <?php echo $userRow['lastName']; ?> </h3>
                                 <hr />
                                 
                                 <div class="panel panel-default">
@@ -166,29 +166,29 @@ header( 'Location: doctorprofile.php' ) ;
                                                 
                                                 <tr>
                                                     <td>Doctor ID</td>
-                                                    <td><?php echo $userRow['doctorId']; ?></td>
+                                                    <td><?php echo $userRow['id']; ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>IC Number</td>
-                                                    <td><?php echo $userRow['icDoctor']; ?></td>
+                                                    <td><?php echo $userRow['employeeNum']; ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Address</td>
-                                                    <td><?php echo $userRow['doctorAddress']; ?></td>
+                                                    <td><?php echo $userRow['address']; ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Contact Number</td>
-                                                    <td><?php echo $userRow['doctorPhone']; ?>
+                                                    <td><?php echo $userRow['phone']; ?>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Email</td>
-                                                    <td><?php echo $userRow['doctorEmail']; ?>
+                                                    <td><?php echo $userRow['email']; ?>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Birthdate</td>
-                                                    <td><?php echo $userRow['doctorDOB']; ?>
+                                                    <td><?php echo $userRow['dob']; ?>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -220,15 +220,15 @@ header( 'Location: doctorprofile.php' ) ;
                                                 <tbody>
                                                     <tr>
                                                         <td>IC Number:</td>
-                                                        <td><?php echo $userRow['icDoctor']; ?></td>
+                                                        <td><?php echo $userRow['employeeNum']; ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>First Name:</td>
-                                                        <td><input type="text" class="form-control" name="doctorFirstName" value="<?php echo $userRow['doctorFirstName']; ?>"  /></td>
+                                                        <td><input type="text" class="form-control" name="doctorFirstName" value="<?php echo $userRow['firstName']; ?>"  /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Last Name</td>
-                                                        <td><input type="text" class="form-control" name="doctorLastName" value="<?php echo $userRow['doctorLastName']; ?>"  /></td>
+                                                        <td><input type="text" class="form-control" name="doctorLastName" value="<?php echo $userRow['lastName']; ?>"  /></td>
                                                     </tr>
                                                     
                                                     
@@ -237,15 +237,15 @@ header( 'Location: doctorprofile.php' ) ;
                                                     
                                                     <tr>
                                                         <td>Phone number</td>
-                                                        <td><input type="text" class="form-control" name="doctorPhone" value="<?php echo $userRow['doctorPhone']; ?>"  /></td>
+                                                        <td><input type="text" class="form-control" name="doctorPhone" value="<?php echo $userRow['phone']; ?>"  /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Email</td>
-                                                        <td><input type="text" class="form-control" name="doctorEmail" value="<?php echo $userRow['doctorEmail']; ?>"  /></td>
+                                                        <td><input type="text" class="form-control" name="doctorEmail" value="<?php echo $userRow['email']; ?>"  /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Address</td>
-                                                        <td><textarea class="form-control" name="doctorAddress"  ><?php echo $userRow['doctorAddress']; ?></textarea></td>
+                                                        <td><textarea class="form-control" name="doctorAddress"  ><?php echo $userRow['address']; ?></textarea></td>
                                                     </tr>
                                                     <tr>
                                                         <td>

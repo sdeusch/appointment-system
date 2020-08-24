@@ -3,7 +3,7 @@
 // {
 //      die('oops connection problem ! --> '.mysql_error());
 // }
-// if(!mysql_select_db("db_healthcare"))
+// if(!mysql_select_db("db_massage"))
 // {
 //      die('oops database selection problem ! --> '.mysql_error());
 // }
@@ -11,7 +11,7 @@
 
 <?php
 //      define('_HOST_NAME','localhost');
-//      define('_DATABASE_NAME','db_healthcare');
+//      define('_DATABASE_NAME','db_massage');
 //      define('_DATABASE_USER_NAME','root');
 //      define('_DATABASE_PASSWORD','');
  
@@ -45,7 +45,7 @@
 //   }
 ?>
 <?php
-$con = mysqli_connect("localhost","root","","db_healthcare");
+$con = mysqli_connect("localhost","root","","db_massage");
 
 // Check connection
 if (mysqli_connect_errno())

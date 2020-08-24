@@ -7,7 +7,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
+$res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
@@ -21,7 +21,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></title>
+        <title>Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></title>
         <!-- Bootstrap Core CSS -->
         <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
         <link href="assets/css/material.css" rel="stylesheet">
@@ -44,14 +44,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></a>
+                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     
                     
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['firstName']; ?> <?php echo $userRow['lastName']; ?><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="doctorprofile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -114,9 +114,9 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr class="filters">
-                                    <th><input type="text" class="form-control" placeholder="patient Ic" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="patient ID" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Name" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Contact No." disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Phone" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Email" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Day" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Date" disabled></th>
@@ -129,13 +129,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                             </thead>
                             
                             <?php 
-                            $res=mysqli_query($con,"SELECT a.*, b.*,c.*
+                            $res=mysqli_query($con,"SELECT a.id as patientId, b.id as appointmentId,
+                                                    a.*, b.*,c.*
                                                     FROM patient a
                                                     JOIN appointment b
-                                                    On a.icPatient = b.patientIc
-                                                    JOIN doctorschedule c
-                                                    On b.scheduleId=c.scheduleId
-                                                    Order By appId desc");
+                                                    On a.id = b.patient_id
+                                                    JOIN therapist_schedule c
+                                                    On b.schedule_id = c.id
+                                                    Order By b.id desc");
                                   if (!$res) {
                                     printf("Error: %s\n", mysqli_error($con));
                                     exit();
@@ -163,18 +164,18 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
                                 echo "<tbody>";
                                 echo "<tr class='$status'>";
-                                    echo "<td>" . $appointment['patientIc'] . "</td>";
+                                    echo "<td>" . $appointment['patientId'] . "</td>";
                                     echo "<td>" . $appointment['patientLastName'] . "</td>";
                                     echo "<td>" . $appointment['patientPhone'] . "</td>";
                                     echo "<td>" . $appointment['patientEmail'] . "</td>";
-                                    echo "<td>" . $appointment['scheduleDay'] . "</td>";
-                                    echo "<td>" . $appointment['scheduleDate'] . "</td>";
-                                    echo "<td>" . $appointment['startTime'] . "</td>";
-                                    echo "<td>" . $appointment['endTime'] . "</td>";
+                                    echo "<td>" . $appointment['schedule_day'] . "</td>";
+                                    echo "<td>" . $appointment['schedule_date'] . "</td>";
+                                    echo "<td>" . $appointment['start_time'] . "</td>";
+                                    echo "<td>" . $appointment['end_time'] . "</td>";
                                     echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
                                     echo "<form method='POST'>";
-                                    echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
-                                    echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
+                                    echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appointmentId']."' onclick='chkit(".$appointment['appointmentId'].",this.checked);' ".$checked."></td>";
+                                    echo "<td class='text-center'><a href='#' id='".$appointment['appointmentId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
                             </td>";
                                
                             } 

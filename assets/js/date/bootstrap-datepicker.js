@@ -1485,8 +1485,8 @@
 			});
 		},
 		dateUpdated: function(e){
-			// `this.updating` is a workaround for preventing infinite recursion
-			// between `changeDate` triggering and `setUTCDate` calling.  Until
+			//  this.updating  is a workaround for preventing infinite recursion
+			// between  changeDate  triggering and  setUTCDate  calling.  Until
 			// there is a better mechanism.
 			if (this.updating)
 				return;
@@ -1689,7 +1689,7 @@
 			return [31, (DPGlobal.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
 		},
 		validParts: /dd?|DD?|mm?|MM?|yy(?:yy)?/g,
-		nonpunctuation: /[^ -\/:-@\[\u3400-\u9fff-`{-~\t\n\r]+/g,
+		nonpunctuation: /[^ -\/:-@\[\u3400-\u9fff- {-~\t\n\r]+/g,
 		parseFormat: function(format){
 			if (typeof format.toValue === 'function' && typeof format.toDisplay === 'function')
                 return format;
