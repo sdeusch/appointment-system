@@ -9,10 +9,13 @@ header("Location: ../index.php");
 $usersession = $_SESSION['patientSession'];
 
 
-$res=mysqli_query($con,"SELECT * FROM patient WHERE icPatient=".$usersession);
+$res=mysqli_query($con,"SELECT * FROM patient WHERE patientEmail='".$usersession."'");
 
 if ($res===false) {
-	echo mysql_error();
+	# echo mysql_error();
+	echo 'Something went wrong';
+	echo var_dump($_SESSION);
+	echo var_dump($usersession);
 } 
 
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);

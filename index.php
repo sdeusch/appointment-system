@@ -14,14 +14,14 @@ header("Location: patient/patient.php");
 }
 if (isset($_POST['login']))
 {
-$icPatient = mysqli_real_escape_string($con,$_POST['icPatient']);
+$patientEmail = mysqli_real_escape_string($con,$_POST['patientEmail']);
 $password  = mysqli_real_escape_string($con,$_POST['password']);
 
-$res = mysqli_query($con,"SELECT * FROM patient WHERE icPatient = '$icPatient'");
+$res = mysqli_query($con,"SELECT * FROM patient WHERE patientEmail = '$patientEmail'");
 $row=mysqli_fetch_array($res,MYSQLI_ASSOC);
 if ($row['password'] == $password)
 {
-$_SESSION['patientSession'] = $row['icPatient'];
+$_SESSION['patientSession'] = $row['patientEmail'];
 ?>
 <script type="text/javascript">
 alert('Login Success');
@@ -133,7 +133,7 @@ alert('User already registered. Please try again');
                                             <form class="form" role="form" method="POST" accept-charset="UTF-8" >
                                                 <div class="form-group">
                                                     <label class="sr-only" for="icPatient">Email</label>
-                                                    <input type="text" class="form-control" name="icPatient" placeholder="IC Number" required>
+                                                    <input type="text" class="form-control" name="patientEmail" placeholder="Email" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="sr-only" for="password">Password</label>
