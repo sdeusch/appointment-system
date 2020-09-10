@@ -2,12 +2,10 @@
 session_start();
 include_once '../assets/conn/dbconnect.php';
 $session=$_SESSION[ 'patientSession'];
-$res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
-	JOIN appointment b
-		On a.icPatient = b.patientIc
-	JOIN doctorschedule c
-		On b.scheduleId=c.scheduleId
-	WHERE b.patientIc ='$session'");
+$res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a 
+                                             JOIN appointment b    on a.id = b.patient_id 
+											 JOIN doctorschedule c on b.scheduleId=c.scheduleId 
+											 WHERE a.patientEmail ='$session'");
 	if (!$res) {
 		die( "Error running $sql: " . mysqli_error());
 	}

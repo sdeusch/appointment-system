@@ -32,6 +32,8 @@ header("Location: patient/patient.php");
 ?>
 <script>
 alert('wrong input ');
+	echo 'Something went wrong';
+
 </script>
 <?php
 }
@@ -43,16 +45,17 @@ if (isset($_POST['signup'])) {
 $patientFirstName = mysqli_real_escape_string($con,$_POST['patientFirstName']);
 $patientLastName  = mysqli_real_escape_string($con,$_POST['patientLastName']);
 $patientEmail     = mysqli_real_escape_string($con,$_POST['patientEmail']);
-$icPatient     = mysqli_real_escape_string($con,$_POST['icPatient']);
 $password         = mysqli_real_escape_string($con,$_POST['password']);
 $month            = mysqli_real_escape_string($con,$_POST['month']);
 $day              = mysqli_real_escape_string($con,$_POST['day']);
 $year             = mysqli_real_escape_string($con,$_POST['year']);
+$patientAddress          = mysqli_real_escape_string($con,$_POST['patientAddress']);
+$patientPhone            = mysqli_real_escape_string($con,$_POST['patientPhone']);
 $patientDOB       = $year . "-" . $month . "-" . $day;
 $patientGender = mysqli_real_escape_string($con,$_POST['patientGender']);
 //INSERT
-$query = " INSERT INTO patient (  icPatient, password, patientFirstName, patientLastName,  patientDOB, patientGender,   patientEmail )
-VALUES ( '$icPatient', '$password', '$patientFirstName', '$patientLastName', '$patientDOB', '$patientGender', '$patientEmail' ) ";
+$query = " INSERT INTO patient ( password, patientFirstName, patientLastName,  patientDOB, patientGender,   patientEmail, patientAddress, patientPhone )
+                 VALUES ( '$password', '$patientFirstName', '$patientLastName', '$patientDOB', '$patientGender', '$patientEmail', '$patientAddress', '$patientPhone') ";
 $result = mysqli_query($con, $query);
 // echo $result;
 if( $result )
@@ -65,6 +68,7 @@ alert('Register success. Please Login to make an appointment.');
 }
 else
 {
+    echo var_dump($result);
 ?>
 <script type="text/javascript">
 alert('User already registered. Please try again');
@@ -161,7 +165,7 @@ alert('User already registered. Please try again');
                     <!-- modal content -->
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="modal-title">Sign Up</h3>
+                        <h3 class="modal-title">Konto Einrichten</h3>
                     </div>
                     <!-- modal body start -->
                     <div class="modal-body">
@@ -171,47 +175,24 @@ alert('User already registered. Please try again');
                             <div class="row">
                                 <div class="col-md-6">
                                     
-                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
-                                        <h4>It's free and always will be.</h4>
+                                    <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">                                       
                                         <div class="row">
                                             <div class="col-xs-6 col-md-6">
-                                                <input type="text" name="patientFirstName" value="" class="form-control input-lg" placeholder="First Name" required />
+                                                <input type="text" name="patientFirstName" value="" class="form-control input-lg" placeholder="Vorname" required />
                                             </div>
                                             <div class="col-xs-6 col-md-6">
-                                                <input type="text" name="patientLastName" value="" class="form-control input-lg" placeholder="Last Name" required />
+                                                <input type="text" name="patientLastName" value="" class="form-control input-lg" placeholder="Nachname" required />
                                             </div>
                                         </div>
                                         
-                                        <input type="text" name="patientEmail" value="" class="form-control input-lg" placeholder="Your Email"  required/>
-                                        <input type="number" name="icPatient" value="" class="form-control input-lg" placeholder="Your IC Number"  required/>
-                                        
-                                        
-                                        <input type="password" name="password" value="" class="form-control input-lg" placeholder="Password"  required/>
-                                        
-                                        <input type="password" name="confirm_password" value="" class="form-control input-lg" placeholder="Confirm Password"  required/>
-                                        <label>Birth Date</label>
-                                        <div class="row">
-                                            
-                                            <div class="col-xs-4 col-md-4">
-                                                <select name="month" class = "form-control input-lg" required>
-                                                    <option value="">Month</option>
-                                                    <option value="01">Jan</option>
-                                                    <option value="02">Feb</option>
-                                                    <option value="03">Mar</option>
-                                                    <option value="04">Apr</option>
-                                                    <option value="05">May</option>
-                                                    <option value="06">Jun</option>
-                                                    <option value="07">Jul</option>
-                                                    <option value="08">Aug</option>
-                                                    <option value="09">Sep</option>
-                                                    <option value="10">Oct</option>
-                                                    <option value="11">Nov</option>
-                                                    <option value="12">Dec</option>
-                                                </select>
-                                            </div>
+                                        <input type="text" name="patientEmail" value="" class="form-control input-lg" placeholder="Email"  required/>
+                                        <input type="password" name="password" value="" class="form-control input-lg" placeholder="Passwort"  required/>                                        
+                                        <input type="password" name="confirm_password" value="" class="form-control input-lg" placeholder="Password Bestätigung"  required/>
+                                        <label>Geburtstag</label>
+                                        <div class="row">            
                                             <div class="col-xs-4 col-md-4">
                                                 <select name="day" class = "form-control input-lg" required>
-                                                    <option value="">Day</option>
+                                                    <option value="">Tag</option>
                                                     <option value="01">1</option>
                                                     <option value="02">2</option>
                                                     <option value="03">3</option>
@@ -244,11 +225,27 @@ alert('User already registered. Please try again');
                                                     <option value="30">30</option>
                                                     <option value="31">31</option>
                                                 </select>
-                                            </div>
+                                            </div>                            
+                                            <div class="col-xs-4 col-md-4">
+                                                <select name="month" class = "form-control input-lg" required>
+                                                    <option value="">Monat</option>
+                                                    <option value="01">Jänner</option>
+                                                    <option value="02">Februar</option>
+                                                    <option value="03">März</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">Mai</option>
+                                                    <option value="06">Juni</option>
+                                                    <option value="07">Juli</option>
+                                                    <option value="08">August</option>
+                                                    <option value="09">Septemper</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">Dezember</option>
+                                                </select>
+                                            </div>                                            
                                             <div class="col-xs-4 col-md-4">
                                                 <select name="year" class = "form-control input-lg" required>
-                                                    <option value="">Year</option>
-                                                    
+                                                    <option value="">Jahr</option>
                                                     <option value="1981">1981</option>
                                                     <option value="1982">1982</option>
                                                     <option value="1983">1983</option>
@@ -285,17 +282,27 @@ alert('User already registered. Please try again');
                                                 </select>
                                             </div>
                                         </div>
-                                        <label>Gender : </label>
+                                        <label>Geschlecht </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="patientGender" value="male" required/>Male
+                                            <input type="radio" name="patientGender" value="männlich" required/>Männlich
                                         </label>
                                         <label class="radio-inline" >
-                                            <input type="radio" name="patientGender" value="female" required/>Female
+                                            <input type="radio" name="patientGender" value="weiblich" required/>Weiblich
                                         </label>
+                                        <label class="radio-inline" >
+                                            <input type="radio" name="patientGender" value="anders" required/>Anders
+                                        </label>
+                                        <div class="row">
+                                            <div class="col-xs-8 col-md-8">
+                                                <input type="text" name="patientAddress" value="" class="form-control input-lg" placeholder="Adresse (optional)" />
+                                            </div>
+                                            <div class="col-xs-4 col-md-4">
+                                                <input type="text" name="patientPhone" value="" class="form-control input-lg" placeholder="Telefon (optional)" />
+                                            </div>
+                                        </div>
                                         <br />
-                                        <span class="help-block">By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.</span>
-                                        
-                                        <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit" name="signup" id="signup">Create my account</button>
+                                        <span class="help-block">Wenn Sie auf "Mein Konto erstellen" klicken, stimmen Sie unseren Nutzungsbedingungen zu und haben unsere Richtlinien zur Datennutzung einschließlich unserer Cookie-Nutzung gelesen.</span>                                        
+                                        <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit" name="signup" id="signup">Mein Konto Erstellen</button>
                                     </form>
                                     
                                 </div>

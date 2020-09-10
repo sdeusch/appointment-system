@@ -12,6 +12,7 @@ $usersession = $_SESSION['patientSession'];
 $res=mysqli_query($con,"SELECT * FROM patient WHERE patientEmail='".$usersession."'");
 
 if ($res===false) {
+	header("Location: ../index.php");
 	# echo mysql_error();
 	echo 'Something went wrong';
 	echo var_dump($_SESSION);
@@ -28,18 +29,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>Patient Dashboard</title>
-		<!-- Bootstrap -->
-		<!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet"> -->
+		<title>Kunden Termine</title>
+		
 		<link href="assets/css/material.css" rel="stylesheet">
 		<link href="assets/css/default/style.css" rel="stylesheet">
 		<!-- <link href="assets/css/default/style1.css" rel="stylesheet"> -->
 		<link href="assets/css/default/blocks.css" rel="stylesheet">
 		<link href="assets/css/date/bootstrap-datepicker.css" rel="stylesheet">
 		<link href="assets/css/date/bootstrap-datepicker3.css" rel="stylesheet">
-		<!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
-		<!-- <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> -->
 		<!--Font Awesome (added because you use icons in your prepend/append)-->
 		<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css" />
 		
@@ -64,8 +61,8 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 					<ul class="nav navbar-nav">
 						<ul class="nav navbar-nav">
 							<li><a href="patient.php">Home</a></li>
-							<!-- <li><a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>" >Profile</a></li> -->
-							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
+							<!-- <li><a href="profile.php?id=<?php echo $userRow['patientEmail']; ?>" >Profile</a></li> -->
+							<li><a href="patientapplist.php?id=<?php echo $userRow['id']; ?>">Appointment</a></li>
 						</ul>
 					</ul>
 					
@@ -74,14 +71,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?><b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
+									<a href="profile.php?patientId=<?php echo $userRow['patientEmail']; ?>"><i class="fa fa-fw fa-user"></i>Meine Daten</a>
 								</li>
 								<li>
-									<a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="glyphicon glyphicon-file"></i> Appointment</a>
+									<a href="patientapplist.php?patientId=<?php echo $userRow['patientEmail']; ?>"><i class="glyphicon glyphicon-calendar"></i> Meine Termine</a>
 								</li>
 								<li class="divider"></li>
 								<li>
-									<a href="patientlogout.php?logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+									<a href="patientlogout.php?logout"><i class="fa fa-fw fa-power-off"></i> Ausloggen</a>
 								</li>
 							</ul>
 						</li>

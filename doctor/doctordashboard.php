@@ -11,7 +11,6 @@ $res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +20,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></title>
+        <title>Willkommen <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></title>
         <!-- Bootstrap Core CSS -->
         <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
         <link href="assets/css/material.css" rel="stylesheet">

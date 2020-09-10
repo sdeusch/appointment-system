@@ -11,9 +11,6 @@ $res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +28,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
         <link href="assets/css/sb-admin.css" rel="stylesheet">
         <link href="assets/css/time/bootstrap-clockpicker.css" rel="stylesheet">
         <link href="assets/css/style.css" rel="stylesheet">
-        <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
         <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
         <!-- Custom Fonts -->
     </head>
@@ -127,15 +124,15 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr class="filters">
-                                    <th><input type="text" class="form-control" placeholder="ID" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Name" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Password" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Phone" disabled></th>
+                                    <th><input type="text" class="form-control" style="text-align:center" placeholder="ID" disabled></th>
+                                    <th><input type="text" class="form-control" style="text-align:center" placeholder="Name" disabled></th>
+                                    <th><input type="text" class="form-control" style="text-align:center" placeholder="Password" disabled></th>
+                                    <th><input type="text" class="form-control" style="text-align:center" placeholder="Telefon" disabled></th>
                                     <!-- <th><input type="text" class="form-control" placeholder="Email" disabled></th> -->
-                                    <th><input type="text" class="form-control" placeholder="Gender" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Status" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Birthdate" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Address" disabled></th>
+                                    <th><input type="text" class="form-control" style="text-align:center" placeholder="Geschlecht" disabled></th>
+                                    <th><input type="text" class="form-control" style="text-align:center" placeholder="Geburtstag" disabled></th>
+                                    <th><input type="text" class="form-control" style="text-align:center" placeholder="Adresse" disabled></th>
+                                    <th><input type="text" class="form-control" style="text-align:center" placeholder="Löschen" disabled></th>
                                 </tr>
                             </thead>
                             
@@ -155,11 +152,10 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     echo "<td>" . $patientRow['patientPhone'] . "</td>";
                                     // echo "<td>" . $patientRow['patientEmail'] . "</td>";
                                     echo "<td>" . $patientRow['patientGender'] . "</td>";
-                                    echo "<td>" . $patientRow['patientMaritialStatus'] . "</td>";
                                     echo "<td>" . $patientRow['patientDOB'] . "</td>";
                                     echo "<td>" . $patientRow['patientAddress'] . "</td>";
                                     echo "<form method='POST'>";
-                                    echo "<td class='text-center'><a href='#' id='".$patientRow['id']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
+                                    echo "<td class='text-center'><a href='#' id='".$patientRow['id']."' class='delete'> <span class='fa fa-trash'></span></a>
                             </td>";
                                
                             } 
@@ -190,14 +186,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 $(function() {
 $(".delete").click(function(){
 var element = $(this);
-var ic = element.attr("id");
-var info = 'ic=' + ic;
-if(confirm("Are you sure you want to delete this?"))
+var id = element.attr("id");
+var data = 'id=' + id;
+if(confirm("Sind Sie sicher, daß Sie diesen Kunden löschen wollen?"))
 {
  $.ajax({
    type: "POST",
    url: "deletepatient.php",
-   data: info,
+   data: data,
    success: function(){
  }
 });
