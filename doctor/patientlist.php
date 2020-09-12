@@ -13,80 +13,12 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></title>
-        <!-- Bootstrap Core CSS -->
-        <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
-        <link href="assets/css/material.css" rel="stylesheet">
-        <!-- Custom CSS -->
-        <link href="assets/css/sb-admin.css" rel="stylesheet">
-        <link href="assets/css/time/bootstrap-clockpicker.css" rel="stylesheet">
-        <link href="assets/css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
-        <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
-        <!-- Custom Fonts -->
-    </head>
+<html lang="de">
+    <?php include("html_head.php"); ?>  
     <body>
         <div id="wrapper">
 
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></a>
-                </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    
-                    
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['firstName']; ?> <?php echo $userRow['lastName']; ?><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="logout.php?logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                         <li>
-                            <a href="doctordashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="addschedule.php"><i class="fa fa-fw fa-table"></i> Doctor Schedule</a>
-                        </li>
-                        <li class="active">
-                            <a href="patientlist.php"><i class="fa fa-fw fa-edit"></i> Patient List</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-            <!-- navigation end -->
+            <?php include("header.php"); ?> 
 
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -95,28 +27,21 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     <div class="row">
                         <div class="col-lg-12">
                             <h2 class="page-header">
-                            Patient List
-                            </h2>
-                            <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="fa fa-calendar"></i> Patient List
-                                </li>
-                            </ol>
+                            Kunden Datei
+                            </h2>                            
                         </div>
                     </div>
                     <!-- Page Heading end-->
 
                     <!-- panel start -->
                     <div class="panel panel-primary filterable">
-
-                        <!-- panel heading starat -->
-                        <div class="panel-heading">
-                            <h3 class="panel-title">List of Patients</h3>
-                            <div class="pull-right">
+                        <!-- Default panel contents -->
+                       <div class="panel-heading">
+                        <h3 class="panel-title">Kunden Liste</h3>
+                        <div class="pull-right">
                             <button class="btn btn-default btn-xs btn-filter"><span class="fa fa-filter"></span> Filter</button>
                         </div>
                         </div>
-                        <!-- panel heading end -->
 
                         <div class="panel-body">
                         <!-- panel content start -->
@@ -171,39 +96,66 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <!-- panel content end -->
                         <!-- panel end -->
                         </div>
-                    </div>
-                    <!-- panel start -->
 
+
+
+                       
+
+                             
+                    </div>                
+                    <!-- panel end -->
+ 
                 </div>
+                <!-- /.container-fluid -->
             </div>
+            <!-- /#page-wrapper -->
+        </div>
         <!-- /#wrapper -->
 
 
        
         <!-- jQuery -->
-        <script src="../patient/assets/js/jquery.js"></script>
         <script type="text/javascript">
-$(function() {
-$(".delete").click(function(){
-var element = $(this);
-var id = element.attr("id");
-var data = 'id=' + id;
-if(confirm("Sind Sie sicher, daß Sie diesen Kunden löschen wollen?"))
-{
- $.ajax({
-   type: "POST",
-   url: "deletepatient.php",
-   data: data,
-   success: function(){
- }
-});
-  $(this).parent().parent().fadeOut(300, function(){ $(this).remove();});
- }
-return false;
-});
-});
-</script>
- <script type="text/javascript">
+                    function chkit(uid, chk) {
+                    chk = (chk==true ? "1" : "0");
+                    var url = "checkdb.php?userid="+uid+"&chkYesNo="+chk;
+                    if(window.XMLHttpRequest) {
+                        req = new XMLHttpRequest();
+                    } else if(window.ActiveXObject) {
+                        req = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    // Use get instead of post.
+                    req.open("GET", url, true);
+                    req.send(null);
+                    }
+        </script>
+
+        <script type="text/javascript">
+                    $(function() {
+                    $(".delete").click(function(){
+                    var element = $(this);
+                    var appid = element.attr("id");
+                    var info = 'id=' + appid;
+                    if(confirm("Are you sure you want to delete this?"))
+                    {
+                    $.ajax({
+                    type: "POST",
+                    url: "deleteappointment.php",
+                    data: info,
+                    success: function(){
+                    }
+                    });
+                    $(this).parent().parent().fadeOut(300, function(){ $(this).remove();});
+                    }
+                    return false;
+                    });
+                    });
+        </script>
+        <!-- Bootstrap Core JavaScript -->
+        
+        <!-- Latest compiled and minified JavaScript -->
+         <!-- script for jquery datatable start-->
+        <script type="text/javascript">
             /*
             Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
             */
@@ -250,12 +202,7 @@ return false;
                 });
             });
         </script>
-        
-        <!-- Bootstrap Core JavaScript -->
-        <script src="../patient/assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/bootstrap-clockpicker.js"></script>
-        <!-- Latest compiled and minified JavaScript -->
-         <!-- script for jquery datatable start-->
-        <!-- Include Date Range Picker -->
+        <!-- script for jquery datatable end-->
+
     </body>
 </html>

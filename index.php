@@ -320,8 +320,8 @@ alert('User already registered. Please try again');
             <div class="container">
                 <div class="row">
                     <div class="col-md-5">
-                        <h2>Make appointment today!</h2>
-                        <p>This is Doctor's Schedule. Please <span class="label label-danger">login</span> to make an appointment. </p>
+                        <h2>Buchen Sir Ihren Termin!</h2>
+                        <p>Diese Termine sind noch frei. Bitte einloggen zum buchen.</p>
                             
                         <!-- date textbox -->
                        
