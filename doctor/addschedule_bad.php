@@ -1,54 +1,46 @@
 <?php
-session_start();
-include_once '../assets/conn/dbconnect.php';
-// include_once 'connection/server.php';
-if(!isset($_SESSION['doctorSession']))
-{
-header("Location: ../index.php");
-}
-$usersession = $_SESSION['doctorSession'];
-$therapist_id = $usersession;
-$res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
-$userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
-// insert
+    session_start();
+    include_once '../assets/conn/dbconnect.php';
+    if(!isset($_SESSION['doctorSession'])) {
+        header("Location: ../index.php");
+    }
+    $usersession = $_SESSION['doctorSession'];
+    $therapist_id = $usersession;
+    $res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
+    $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
+    if (isset($_POST['submit'])) {
+        $date = mysqli_real_escape_string($con,$_POST['date']);
+        $scheduleday  = mysqli_real_escape_string($con,$_POST['scheduleday']);
+        $starttime     = mysqli_real_escape_string($con,$_POST['starttime']);
+        $endtime     = mysqli_real_escape_string($con,$_POST['endtime']);
+        $bookavail   = mysqli_real_escape_string($con,$_POST['bookavail']);
 
-if (isset($_POST['submit'])) {
-$date = mysqli_real_escape_string($con,$_POST['date']);
-$scheduleday  = mysqli_real_escape_string($con,$_POST['scheduleday']);
-$starttime     = mysqli_real_escape_string($con,$_POST['starttime']);
-$endtime     = mysqli_real_escape_string($con,$_POST['endtime']);
-$bookavail   = mysqli_real_escape_string($con,$_POST['bookavail']);
+        //INSERT
+        $query = " INSERT INTO therapist_schedule ( therapist_id , schedule_date, schedule_day, start_time, end_time,  is_available)
+        VALUES ( $therapist_id , '$date', '$scheduleday', '$starttime', '$endtime', true) ";
 
-//INSERT
-$query = " INSERT INTO therapist_schedule ( therapist_id , schedule_date, schedule_day, start_time, end_time,  is_available)
-VALUES ( $therapist_id , '$date', '$scheduleday', '$starttime', '$endtime', true) ";
+        $result = mysqli_query($con, $query);
 
-$result = mysqli_query($con, $query);
-
-if( $result )
-{
-?>
-<script type="text/javascript">
-alert('Schedule added successfully.');
-</script>
-<?php
-}
-else
-{
-?>
-<script type="text/javascript">
- alert('Added fail. Please try again.');
-</script>
-<?php
-}
-
-}
+        if( $result )
+        {
+        ?>
+        <script type="text/javascript">
+        alert('Schedule added successfully.');
+        </script>
+        <?php
+        }
+        else
+        {
+        ?>
+        <script type="text/javascript">
+        alert('Added fail. Please try again.');
+        </script>
+        <?php
+        }
+    }
 ?>
 
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
     <?php include("html_head.php"); ?>  
@@ -63,7 +55,7 @@ else
                     <div class="row">
                         <div class="col-lg-12">
                             <h2 class="page-header">
-                            Termine Planen
+                            Arbeitszeit Planen
                             </h2>
                             <ol class="breadcrumb">
                                 <li class="active">

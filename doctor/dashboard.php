@@ -1,16 +1,13 @@
 <?php
-session_start();
-include_once '../assets/conn/dbconnect.php';
-// include_once 'connection/server.php';
-if(!isset($_SESSION['doctorSession']))
-{
-header("Location: ../index.php");
-}
-$usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
-$userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
-
-
+    session_start();
+    include_once '../assets/conn/dbconnect.php';
+    if(!isset($_SESSION['doctorSession']))
+    {
+    header("Location: ../index.php");
+    }
+    $therapist_id  = $_SESSION['doctorSession'];
+    $res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$therapist_id );
+    $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -26,14 +23,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2 class="page-header">
-                            Dashboard
-                            </h2>
-                            <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="fa fa-file"></i> Blank Page
-                                </li>
-                            </ol>
+                            <h2 class="page-header">Übersicht</h2>
                         </div>
                     </div>
                     <!-- Page Heading end-->
@@ -42,7 +32,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     <div class="panel panel-primary filterable">
                         <!-- Default panel contents -->
                        <div class="panel-heading">
-                        <h3 class="panel-title">Appointment List</h3>
+                        <h3 class="panel-title">Gebuchte Kunden (ab heute)</h3>
                         <div class="pull-right">
                             <button class="btn btn-default btn-xs btn-filter"><span class="fa fa-filter"></span> Filter</button>
                         </div>
@@ -52,96 +42,82 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr class="filters">
-                                    <th><input type="text" class="form-control" placeholder="patient ID" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Kunde ID" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Name" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Phone" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Telefon" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Email" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Day" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Date" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Start" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="End" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Status" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Complete" disabled></th>
-                                    <th><input type="text" class="form-control" placeholder="Delete" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Tag" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Datum" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Begin" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Ende" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Bestätigt" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Löschen" disabled></th>
                                 </tr>
                             </thead>
                             
                             <?php 
-                            $res=mysqli_query($con,"SELECT a.id as patientId, b.id as appointmentId,
-                                                    a.*, b.*,c.*
-                                                    FROM patient a
-                                                    JOIN appointment b
-                                                    On a.id = b.patient_id
-                                                    JOIN therapist_schedule c
-                                                    On b.schedule_id = c.id
-                                                    Order By b.id desc");
+                            $res=mysqli_query($con,"select 
+                                                     a.id as appointmentId, 
+                                                     p.id as patientId,                                                      
+                                                     p.patientFirstName as patientFirstName,
+                                                     p.patientLastName as patientLastName,
+                                                     p.patientEmail as patientEmail,
+                                                     p.patientPhone as patientPhone,
+                                                     date_format(a.start_time,'%d.%m %Y') as calendarDate,
+                                                     dayname(a.start_time) as weekDay,
+                                                     date_format(a.start_time, '%H:%i')  as startTime, 
+                                                     date_format(a.end_time, '%H:%i')  as endTime, 
+                                                     a.confirmed as confirmed,
+                                                     a.delivered as delivered                              
+                                                  from appointment a join therapist t on a.therapist_id = t.id 
+                                                                     join patient p on a.patient_id = p.id 
+                                                   where t.id = $therapist_id 
+                                                   and a.start_time > date(now())
+                                                   order by a.start_time");
                                   if (!$res) {
                                     printf("Error: %s\n", mysqli_error($con));
                                     exit();
                                 }
                             while ($appointment=mysqli_fetch_array($res)) {
-                                
-                                if ($appointment['status']=='process') {
-                                    $status="danger";
-                                    $icon='remove';
-                                    $checked='';
-
+                                                                
+                                if($appointment['confirmed']==TRUE) {
+                                     $confirm_icon='fa fa-check';
                                 } else {
-                                    $status="success";
-                                    $icon='ok';
-                                    $checked = 'disabled';
+                                     $confirm_icon='fa fa-question';                                    
                                 }
-
-                                
-                              
-                                
-                             
-                                
-
-                                
-
                                 echo "<tbody>";
-                                echo "<tr class='$status'>";
+                                echo "<tr >";
                                     echo "<td>" . $appointment['patientId'] . "</td>";
-                                    echo "<td>" . $appointment['patientLastName'] . "</td>";
+                                    echo "<td>" . $appointment['patientLastName'] . ", ". $appointment['patientFirstName'] . "  </td>";
                                     echo "<td>" . $appointment['patientPhone'] . "</td>";
                                     echo "<td>" . $appointment['patientEmail'] . "</td>";
-                                    echo "<td>" . $appointment['schedule_day'] . "</td>";
-                                    echo "<td>" . $appointment['schedule_date'] . "</td>";
-                                    echo "<td>" . $appointment['start_time'] . "</td>";
-                                    echo "<td>" . $appointment['end_time'] . "</td>";
-                                    echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
-                                    echo "<form method='POST'>";
-                                    echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appointmentId']."' onclick='chkit(".$appointment['appointmentId'].",this.checked);' ".$checked."></td>";
-                                    echo "<td class='text-center'><a href='#' id='".$appointment['appointmentId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
-                            </td>";
-                               
+                                    echo "<td>" . $appointment['weekDay'] . "</td>";
+                                    echo "<td>" . $appointment['calendarDate'] . "</td>";
+                                    echo "<td>" . $appointment['startTime'] . " Uhr</td>";
+                                    echo "<td>" . $appointment['endTime'] . " Uhr</td>";
+                                    echo "<td class='text-center'><a href='#' id='".$appointment['appointmentId']."'                         > <span class='".$confirm_icon."'></span></a>";
+                                    echo "<td class='text-center'><a href='#' id='".$appointment['appointmentId']."' class='deleted'> <span class='fa fa-trash'></span></a>";
                             } 
                                 echo "</tr>";
                            echo "</tbody>";
                        echo "</table>";
-                       echo "<div class='panel panel-default'>";
-                       echo "<div class='col-md-offset-3 pull-right'>";
-                       echo "<button class='btn btn-primary' type='submit' value='Submit' name='submit'>Update</button>";
-                        echo "</div>";
-                        echo "</div>";
                         ?>
                     </div>
                 </div>
                     <!-- panel end -->
 <script type="text/javascript">
-function chkit(uid, chk) {
-   chk = (chk==true ? "1" : "0");
-   var url = "checkdb.php?userid="+uid+"&chkYesNo="+chk;
-   if(window.XMLHttpRequest) {
-      req = new XMLHttpRequest();
-   } else if(window.ActiveXObject) {
-      req = new ActiveXObject("Microsoft.XMLHTTP");
-   }
-   // Use get instead of post.
-   req.open("GET", url, true);
-   req.send(null);
-}
+        function chkit(uid, chk) {
+            chk = (chk==true ? "1" : "0");
+            var url = "checkdb.php?userid="+uid+"&chkYesNo="+chk;
+            if(window.XMLHttpRequest) {
+                req = new XMLHttpRequest();
+            } else if(window.ActiveXObject) {
+                req = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            // Use get instead of post.
+            req.open("GET", url, true);
+            req.send(null);
+        }
 </script>
 
 
@@ -153,31 +129,26 @@ function chkit(uid, chk) {
         </div>
         <!-- /#wrapper -->
 
-
-       
-        <!-- jQuery -->
-        
         <script type="text/javascript">
-$(function() {
-$(".delete").click(function(){
-var element = $(this);
-var appid = element.attr("id");
-var info = 'id=' + appid;
-if(confirm("Are you sure you want to delete this?"))
-{
- $.ajax({
-   type: "POST",
-   url: "deleteappointment.php",
-   data: info,
-   success: function(){
- }
-});
-  $(this).parent().parent().fadeOut(300, function(){ $(this).remove();});
- }
-return false;
-});
-});
-</script>
+            $(function() {
+                $(".delete").click(function(){
+                    var element = $(this);
+                    var appid = element.attr("id");
+                    var info = 'id=' + appid;
+                    if(confirm("Are you sure you want to delete this?"))
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: "deleteappointment.php",
+                            data: info,
+                            success: function(){}
+                        });
+                        $(this).parent().parent().fadeOut(300, function(){ $(this).remove();});
+                    }
+                    return false;
+                });
+            });
+        </script>
         <!-- Bootstrap Core JavaScript -->
         
         <!-- Latest compiled and minified JavaScript -->

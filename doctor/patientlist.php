@@ -1,17 +1,16 @@
 <?php
-session_start();
-include_once '../assets/conn/dbconnect.php';
-// include_once 'connection/server.php';
-if(!isset($_SESSION['doctorSession']))
-{
-header("Location: ../index.php");
-}
-$usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
-$userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
-
-
+    session_start();
+    include_once '../assets/conn/dbconnect.php';
+    // include_once 'connection/server.php';
+    if(!isset($_SESSION['doctorSession']))
+    {
+    header("Location: ../index.php");
+    }
+    $usersession = $_SESSION['doctorSession'];
+    $res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
+    $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="de">
     <?php include("html_head.php"); ?>  
@@ -37,7 +36,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     <div class="panel panel-primary filterable">
                         <!-- Default panel contents -->
                        <div class="panel-heading">
-                        <h3 class="panel-title">Kunden Liste</h3>
+                        <h3 class="panel-title">Alphabetisch Nachname, Vorname</h3>
                         <div class="pull-right">
                             <button class="btn btn-default btn-xs btn-filter"><span class="fa fa-filter"></span> Filter</button>
                         </div>
@@ -62,17 +61,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                             </thead>
                             
                             <?php 
-                            $result=mysqli_query($con,"SELECT * FROM patient");
-                            
-
-                                  
-                            while ($patientRow=mysqli_fetch_array($result)) {
-                                
+                            $result=mysqli_query($con,"SELECT * FROM patient order by patientLastName, patientFirstName");
+                                                              
+                            while ($patientRow=mysqli_fetch_array($result)) {                             
                               
                                 echo "<tbody>";
                                 echo "<tr>";
                                     echo "<td>" . $patientRow['id'] . "</td>";
-                                    echo "<td>" . $patientRow['patientFirstName']  .' ' . $patientRow['patientLastName'] . "</td>";
+                                    echo "<td>" . $patientRow['patientLastName']   .', ' . $patientRow['patientFirstName'] . "</td>";
                                     echo "<td>" . $patientRow['password'] . "</td>";
                                     echo "<td>" . $patientRow['patientPhone'] . "</td>";
                                     // echo "<td>" . $patientRow['patientEmail'] . "</td>";
@@ -86,12 +82,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                             } 
                                 echo "</tr>";
                            echo "</tbody>";
-                       echo "</table>";
-                       echo "<div class='panel panel-default'>";
-                       echo "<div class='col-md-offset-3 pull-right'>";
-                       echo "<button class='btn btn-primary' type='submit' value='Submit' name='submit'>Update</button>";
-                        echo "</div>";
-                        echo "</div>";
+                          echo "</table>";                       
                         ?>
                         <!-- panel content end -->
                         <!-- panel end -->

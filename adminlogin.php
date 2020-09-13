@@ -3,7 +3,7 @@ include_once 'assets/conn/dbconnect.php';
 
 session_start();
 if (isset($_SESSION['doctorSession']) != "") {
-header("Location: doctor/doctordashboard.php");
+header("Location: doctor/dashboard.php");
 }
 if (isset($_POST['login']))
 {
@@ -22,7 +22,7 @@ $_SESSION['doctorSession'] = $row['id'];
        alert('Login Success');
 </script>
 <?php
-header("Location: doctor/doctordashboard.php");
+header("Location: doctor/dashboard.php");
 } else {
 ?>
 <script type="text/javascript">

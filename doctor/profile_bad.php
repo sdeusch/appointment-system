@@ -1,106 +1,36 @@
 <?php
-session_start();
-include_once '../assets/conn/dbconnect.php';
-// include_once 'connection/server.php';
-if(!isset($_SESSION['doctorSession']))
-{
-header("Location: ../index.php");
-}
-$usersession = $_SESSION['doctorSession'];
-$res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
-$userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
+    session_start();
+    include_once '../assets/conn/dbconnect.php';
+    
+    if(!isset($_SESSION['doctorSession'])) {
+        header("Location: ../index.php");
+    }
+    $usersession = $_SESSION['doctorSession'];
+    $res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
+    $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 
-if (isset($_POST['submit'])) {
-//variables
-$doctorFirstName = $_POST['doctorFirstName'];
-$doctorLastName = $_POST['doctorLastName'];
-$doctorPhone = $_POST['doctorPhone'];
-$doctorEmail = $_POST['doctorEmail'];
-$doctorAddress = $_POST['doctorAddress'];
+    if (isset($_POST['submit'])) {
+        //variables
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $address = $_POST['address'];
 
-$res=mysqli_query($con,"UPDATE therapist SET firstName='$doctorFirstName', lastName='$doctorLastName', phone='$doctorPhone', email='$doctorEmail', address='$doctorAddress' WHERE id=".$_SESSION['doctorSession']);
-// $userRow=mysqli_fetch_array($res);
+        $res=mysqli_query($con,"UPDATE therapist SET firstName='$firstName', lastName='$lastName', phone='$phone', email='$email', address='$address' WHERE id=".$_SESSION['doctorSession']);
+        // $userRow=mysqli_fetch_array($res);
 
-header( 'Location: doctorprofile.php' ) ;
-
-}
-
-
-
-
-
+        header( 'Location: profile.php' ) ;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></title>
-        <!-- Bootstrap Core CSS -->
-        <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
-        <link href="assets/css/material.css" rel="stylesheet">
-        <!-- Custom CSS -->
-        <link href="assets/css/sb-admin.css" rel="stylesheet">
-        <link href="assets/css/time/bootstrap-clockpicker.css" rel="stylesheet">
-        <link href="assets/css/style.css" rel="stylesheet">
-        <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
-        <!-- Custom Fonts -->
-    </head>
+    <?php include("html_head.php"); ?>  
     <body>
         <div id="wrapper">
 
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['firstName'];?> <?php echo $userRow['lastName'];?></a>
-                </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    
-                    
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['firstName']; ?> <?php echo $userRow['lastName']; ?><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="doctorprofile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                           
-                            <li class="divider"></li>
-                            <li>
-                                <a href="logout.php?logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                         <li>
-                            <a href="doctordashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="addschedule.php"><i class="fa fa-fw fa-table"></i> Doctor Schedule</a>
-                        </li>
-                        <li>
-                            <a href="patientlist.php"><i class="fa fa-fw fa-edit"></i> Patient List</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-            <!-- navigation end -->
+           <?php include("header.php"); ?> 
 
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -224,11 +154,11 @@ header( 'Location: doctorprofile.php' ) ;
                                                     </tr>
                                                     <tr>
                                                         <td>First Name:</td>
-                                                        <td><input type="text" class="form-control" name="doctorFirstName" value="<?php echo $userRow['firstName']; ?>"  /></td>
+                                                        <td><input type="text" class="form-control" name="firstName" value="<?php echo $userRow['firstName']; ?>"  /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Last Name</td>
-                                                        <td><input type="text" class="form-control" name="doctorLastName" value="<?php echo $userRow['lastName']; ?>"  /></td>
+                                                        <td><input type="text" class="form-control" name="lastName" value="<?php echo $userRow['lastName']; ?>"  /></td>
                                                     </tr>
                                                     
                                                     
@@ -237,15 +167,15 @@ header( 'Location: doctorprofile.php' ) ;
                                                     
                                                     <tr>
                                                         <td>Phone number</td>
-                                                        <td><input type="text" class="form-control" name="doctorPhone" value="<?php echo $userRow['phone']; ?>"  /></td>
+                                                        <td><input type="text" class="form-control" name="phone" value="<?php echo $userRow['phone']; ?>"  /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Email</td>
-                                                        <td><input type="text" class="form-control" name="doctorEmail" value="<?php echo $userRow['email']; ?>"  /></td>
+                                                        <td><input type="text" class="form-control" name="email" value="<?php echo $userRow['email']; ?>"  /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Address</td>
-                                                        <td><textarea class="form-control" name="doctorAddress"  ><?php echo $userRow['address']; ?></textarea></td>
+                                                        <td><textarea class="form-control" name="address"  ><?php echo $userRow['address']; ?></textarea></td>
                                                     </tr>
                                                     <tr>
                                                         <td>
