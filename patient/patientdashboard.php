@@ -1,13 +1,12 @@
 <?php
-// session_start();
-session_destroy();
-session_unset();
+session_start();
+// session_destroy();
+// session_unset();
 // include_once '../connection/server.php';
 include_once '../assets/conn/dbconnect.php';
-if(!isset($_SESSION['patientSession']))
-{
-header("Location: ../index.php");
-}
+// if(!isset($_SESSION['patientSession'])) {
+//     header("Location: ../index.php");
+// }
 $usersession = $_SESSION['patientSession'];
 $res=mysql_query("SELECT * FROM patient WHERE icPatient=".$usersession);
 $userRow=mysql_fetch_array($res);
@@ -310,7 +309,7 @@ echo mysql_error();
                                 document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
                                 }
                                 };
-                                xmlhttp.open("GET","getschedule.php?q="+str,true);
+                                xmlhttp.open("GET","getsschedule.php?q="+str,true);
                                 console.log(str);
                                 xmlhttp.send();
                                 }

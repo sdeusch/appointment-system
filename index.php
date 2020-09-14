@@ -500,7 +500,6 @@ alert('User already registered. Please try again');
     <script src="assets/js/transition.js"></script>
     <script src="assets/js/collapse.js"></script>
 
-    <link href="/your-path-to-fontawesome/css/all.css" rel="stylesheet" 
      <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -510,22 +509,19 @@ alert('User already registered. Please try again');
     </script>
     <!-- date start -->
   
-<script>
-    $(document).ready(function(){
-        var date_input=$('input[name="date"]'); //our date input has the name "date"
-        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-        date_input.datepicker({
-            format: 'yyyy-mm-dd',
-            container: container,
-            todayHighlight: true,
-            autoclose: true,
+    <script>
+        $(document).ready(function(){
+            var date_input=$('input[name="date"]'); //our date input has the name "date"
+            var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+            date_input.datepicker({
+                format: 'yyyy-mm-dd',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            })
+
         })
-
-    })
-
-</script>
-
-    <!-- date end -->
+    </script>
    
 </body>
 </html>

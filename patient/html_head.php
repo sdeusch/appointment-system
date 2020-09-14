@@ -25,3 +25,19 @@
         <script src="assets/js/bootstrap.min.js"></script>
         <!-- Custom Fonts -->
     </head>
+
+    	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Kunden Termine</title>
+		
+		<link href="assets/css/material.css" rel="stylesheet">
+		<link href="assets/css/default/style.css" rel="stylesheet">
+		 <link href="assets/css/default/style1.css" rel="stylesheet"> 
+		<link href="assets/css/default/blocks.css" rel="stylesheet">
+		<link href="assets/css/date/bootstrap-datepicker.css" rel="stylesheet">
+		<link href="assets/css/date/bootstrap-datepicker3.css" rel="stylesheet">
+		<!--Font Awesome (added because you use icons in your prepend/append)-->
+		<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css" />		
+	</head>

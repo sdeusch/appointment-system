@@ -1,33 +1,34 @@
 <?php
 include_once 'assets/conn/dbconnect.php';
 
-session_start();
-if (isset($_SESSION['doctorSession']) != "") {
-header("Location: doctor/dashboard.php");
-}
-if (isset($_POST['login']))
-{
-$emlNum = mysqli_real_escape_string($con,$_POST['employeeNumber']);
-$password  = mysqli_real_escape_string($con,$_POST['password']);
+        session_start();
+        if (isset($_SESSION['doctorSession']) != "") {
+            header("Location: doctor/dashboard.php");
+        }
 
-$res = mysqli_query($con,"SELECT * FROM therapist WHERE employeeNum = '$emlNum'");
+        if (isset($_POST['login']))  {
+            $emlNum = mysqli_real_escape_string($con,$_POST['employeeNumber']);
+            $password  = mysqli_real_escape_string($con,$_POST['password']);
+   
+            $res = mysqli_query($con,"SELECT * FROM therapist WHERE employeeNum = '$emlNum'");
 
-$row=mysqli_fetch_array($res,MYSQLI_ASSOC);
-// echo $row['password'];
-if ($row['password'] == $password)
-{
-$_SESSION['doctorSession'] = $row['id'];
+        $row=mysqli_fetch_array($res,MYSQLI_ASSOC);
+        // echo $row['password'];
+        if ($row['password'] == $password) {
+        $_SESSION['doctorSession'] = $row['id'];
 ?>
-<script type="text/javascript">
-       alert('Login Success');
-</script>
+        <script type="text/javascript">
+            alert('Login Success');
+        </script>
 <?php
-header("Location: doctor/dashboard.php");
-} else {
+        header("Location: doctor/dashboard.php");
+        } else {
+
 ?>
-<script type="text/javascript">
-    alert("Wrong input");
-</script>
+    <script type="text/javascript">
+        alert("Wrong input");
+    </script>
+
 <?php
 }
 }

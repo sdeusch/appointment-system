@@ -1,9 +1,8 @@
 <?php
     session_start();
     include_once '../assets/conn/dbconnect.php';
-    if(!isset($_SESSION['doctorSession']))
-    {
-    header("Location: ../index.php");
+    if(!isset($_SESSION['doctorSession'])) {
+        header("Location: ../index.php");
     }
     $therapist_id  = $_SESSION['doctorSession'];
     $res=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$therapist_id );
@@ -70,13 +69,12 @@
                                                      a.confirmed as confirmed,
                                                      a.delivered as delivered                              
                                                   from appointment a join therapist t on a.therapist_id = t.id 
-                                                                     join patient p on a.patient_id = p.id 
+                                                                     join patient p on  p.id = a.patient_id 
                                                    where t.id = $therapist_id 
-                                                   and a.start_time > date(now())
+                                                  
                                                    order by a.start_time");
                                   if (!$res) {
-                                    printf("Error: %s\n", mysqli_error($con));
-                                    exit();
+                                    printf("Error: %s\n", mysqli_error($con));                                    
                                 }
                             while ($appointment=mysqli_fetch_array($res)) {
                                                                 
@@ -96,7 +94,7 @@
                                     echo "<td>" . $appointment['startTime'] . " Uhr</td>";
                                     echo "<td>" . $appointment['endTime'] . " Uhr</td>";
                                     echo "<td class='text-center'><a href='#' id='".$appointment['appointmentId']."'                         > <span class='".$confirm_icon."'></span></a>";
-                                    echo "<td class='text-center'><a href='#' id='".$appointment['appointmentId']."' class='deleted'> <span class='fa fa-trash'></span></a>";
+                                    echo "<td class='text-center'><a href='#' id='".$appointment['appointmentId']."' class='delete'> <span class='fa fa-trash'></span></a>";
                             } 
                                 echo "</tr>";
                            echo "</tbody>";
@@ -120,8 +118,6 @@
         }
 </script>
 
-
- 
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -135,7 +131,7 @@
                     var element = $(this);
                     var appid = element.attr("id");
                     var info = 'id=' + appid;
-                    if(confirm("Are you sure you want to delete this?"))
+                    if(confirm("Wollen Sie diese Reservation wirklich löschen?"))
                     {
                         $.ajax({
                             type: "POST",

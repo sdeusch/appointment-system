@@ -87,12 +87,7 @@
                         <!-- panel content end -->
                         <!-- panel end -->
                         </div>
-
-
-
-                       
-
-                             
+                            
                     </div>                
                     <!-- panel end -->
  
@@ -127,7 +122,7 @@
                     var element = $(this);
                     var appid = element.attr("id");
                     var info = 'id=' + appid;
-                    if(confirm("Are you sure you want to delete this?"))
+                    if(confirm("Wollen Sie diesen Kunden wirklich löschen?"))
                     {
                     $.ajax({
                     type: "POST",

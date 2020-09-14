@@ -1,50 +1,88 @@
 <?php
-    session_start();
-    include_once '../assets/conn/dbconnect.php';
-    if(!isset($_SESSION['doctorSession'])) {
-        header("Location: ../index.php");
-    }
-    $usersession = $_SESSION['doctorSession'];
-    $therapist_id = $usersession;
-    $schedule=mysqli_query($con,"SELECT * FROM therapist WHERE id=".$usersession);
-    $userRow=mysqli_fetch_array($schedule,MYSQLI_ASSOC);
+	session_start();
+	include_once '../assets/conn/dbconnect.php';
 
-    if (isset($_POST['submit'])) {
-        $date = mysqli_real_escape_string($con,$_POST['date']);
-        $starttime     = mysqli_real_escape_string($con,$_POST['starttime']);
-        $endtime     = mysqli_real_escape_string($con,$_POST['endtime']);
-        $comment = mysqli_real_escape_string($con,$_POST['comment']);
+	# Get User Data 
+	$usersession = $_SESSION['patientSession'];
+	$res=mysqli_query($con,"SELECT * FROM patient WHERE patientEmail='".$usersession."'");
+	$userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
+	$userId =$userRow['id'];
+	$firstName =$userRow['patientFirstName'];
+	$lastName =$userRow['patientLastName'];
+	$phone = $userRow['patientPhone'];
+	$address =$userRow['patientAddress'];
+	$dob =$userRow['patientDOB'];
+	
+	# Get schedule of Therapist
+	if (isset($_GET['id']) && isset($_GET['therapist_id'])) {
+		$schedule_id =$_GET['id'];
+		$therapist_id = $_GET['therapist_id'];
+	}
 
-        //INSERT
-        $query = " INSERT INTO work_schedule ( therapist_id , work_day, start_time, end_time, comment)
-                       VALUES ( $therapist_id , '$date', '$starttime', '$endtime', '$comment') ";
+	$res = mysqli_query($con,
+					"select 
+					 t.firstName as therapistFirstName,
+					 t.lastName as therapistLastName,
+					 date_format(s.work_day,'%d.%m %Y') as calendarDate,
+					 dayname(s.work_day) as weekDay,
+					 date_format(s.start_time, '%H:%i')  as startTime, 
+					 date_format(s.end_time, '%H:%i')  as endTime
+					from work_schedule s join therapist t on s.therapist_id = t.id 
+					where s.id = $schedule_id and t.id = $therapist_id");
+	$schedule=mysqli_fetch_array($res,MYSQLI_ASSOC);
+	$therapist = $schedule['therapistFirstName'].' '. $schedule['therapistLastName'];
 
-        $scheduleult = mysqli_query($con, $query);
-        
-        if( $scheduleult )
-        {
-        ?>
-        <script type="text/javascript">
-                alert('Arbeitszeit erfolgreich gespeichert!');
-        </script>
-        <?php
-        }
-        else
-        {
-            
-        ?>
-        <script type="text/javascript">
-                alert('Etwas funktionierte nicht, probiere es nochmal.');
-        </script>
-        <?php
-        }
-    }
+
+	//INSERT
+	if (isset($_POST['appointment'])) {
+	$patientIc = mysqli_real_escape_string($con,$schedule['icPatient']);
+	$scheduleid = mysqli_real_escape_string($con,$appid);
+	$symptom = mysqli_real_escape_string($con,$_POST['symptom']);
+	$comment = mysqli_real_escape_string($con,$_POST['comment']);
+	$avail = "notavail";
+
+	$query = "INSERT INTO appointment (  patientIc , scheduleId , appSymptom , appComment  )
+	VALUES ( '$patientIc', '$scheduleid', '$symptom', '$comment') ";
+
+	//update table appointment schedule
+	$sql = "UPDATE doctorschedule SET bookAvail = '$avail' WHERE scheduleId = $scheduleid" ;
+	$scheduleres=mysqli_query($con,$sql);
+	if ($scheduleres) {
+		$btn= "disable";
+	} 
+
+
+	$result = mysqli_query($con,$query);
+	// echo $result;
+	if( $result )
+	{
+	?>
+	<script type="text/javascript">
+	alert('Appointment made successfully.');
+	</script>
+	<?php
+	header("Location: patientapplist.php");
+	}
+	else
+	{
+		echo mysqli_error($con);
+	?>
+	<script type="text/javascript">
+	alert('Appointment booking fail. Please try again.');
+	</script>
+	<?php
+	header("Location: patient/patient.php");
+	}
+
+	}
 ?>
 <!DOCTYPE html>
 <html lang="de">
     <?php include("html_head.php"); ?>  
-    <body>
-        <div id="wrapper">
+	
+	  <body>
+
+             <div id="wrapper">
 
             <?php include("header.php"); ?> 
 
@@ -211,9 +249,8 @@
             </div>
             <!-- /#page-wrapper -->
         </div>
-        <!-- /#wrapper -->
 
-      <!-- jQuery -->
+<!-- jQuery -->
          <script src="../patient/assets/js/jquery.js"></script>
         
         <!-- Bootstrap Core JavaScript -->
@@ -257,54 +294,6 @@
                     $(this).parent().parent().fadeOut(300, function(){ $(this).remove();});
                 }
                 return false;
-                });
-            });
-        </script>
-
-        <script type="text/javascript">
-            /*
-            Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
-            */
-            $(document).ready(function(){
-                $('.filterable .btn-filter').click(function(){
-                    var $panel = $(this).parents('.filterable'),
-                    $filters = $panel.find('.filters input'),
-                    $tbody = $panel.find('.table tbody');
-                    if ($filters.prop('disabled') == true) {
-                        $filters.prop('disabled', false);
-                        $filters.first().focus();
-                    } else {
-                        $filters.val('').prop('disabled', true);
-                        $tbody.find('.no-scheduleult').remove();
-                        $tbody.find('tr').show();
-                    }
-                });
-
-                $('.filterable .filters input').keyup(function(e){
-                    /* Ignore tab key */
-                    var code = e.keyCode || e.which;
-                    if (code == '9') return;
-                    /* Useful DOM data and selectors */
-                    var $input = $(this),
-                    inputContent = $input.val().toLowerCase(),
-                    $panel = $input.parents('.filterable'),
-                    column = $panel.find('.filters th').index($input.parents('th')),
-                    $table = $panel.find('.table'),
-                    $rows = $table.find('tbody tr');
-                    /* Dirtiest filter function ever ;) */
-                    var $filteredRows = $rows.filter(function(){
-                        var value = $(this).find('td').eq(column).text().toLowerCase();
-                        return value.indexOf(inputContent) === -1;
-                    });
-                    /* Clean previous no-scheduleult if exist */
-                    $table.find('tbody .no-scheduleult').remove();
-                    /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
-                    $rows.show();
-                    $filteredRows.hide();
-                    /* Prepend no-scheduleult row if all rows are filtered */
-                    if ($filteredRows.length === $rows.length) {
-                        $table.find('tbody').prepend($('<tr class="no-scheduleult text-center"><td colspan="'+ $table.find('.filters th').length +'">No scheduleult found</td></tr>'));
-                    }
                 });
             });
         </script>

@@ -68,10 +68,7 @@ CREATE TABLE IF NOT EXISTS  therapist (
 -- Dumping data for table  patient 
 --
 
-INSERT INTO  patient  (  password ,  patientFirstName ,  patientLastName ,  patientMaritialStatus ,  patientDOB ,  patientGender ,  patientAddress ,  patientPhone ,  patientEmail ) VALUES
-('123', 'Lukas', 'Deusch', 'single', '1992-05-17', 'male', 'Hauptstraße 1, Mülln, Salzburg, A-5021', '173567758', 'lukas@gmail.com');
-
-
+???  CREATE sampel therapist data >> 
 
 
 --
@@ -95,31 +92,6 @@ CREATE TABLE IF NOT EXISTS  appointment  (
 
 INSERT INTO  appointment  ( appId ,  patientIc ,  scheduleId ,  appSymptom ,  appComment ,  status ) VALUES
 (86, 920517105553, 40, 'Pening Kepala', 'Bila doktor free?', 'done');
-
--- --------------------------------------------------------
-
---
--- Table structure for table  doctor 
---
-
-CREATE TABLE IF NOT EXISTS  doctor  (
-   icDoctor  bigint(12) NOT NULL,
-   password  varchar(20) NOT NULL,
-   doctorId  int(3) NOT NULL,
-   doctorFirstName  varchar(50) NOT NULL,
-   doctorLastName  varchar(50) NOT NULL,
-   doctorAddress  varchar(100) NOT NULL,
-   doctorPhone  varchar(15) NOT NULL,
-   doctorEmail  varchar(20) NOT NULL,
-   doctorDOB  date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table  doctor 
---
-
-INSERT INTO  doctor  ( icDoctor ,  password ,  doctorId ,  doctorFirstName ,  doctorLastName ,  doctorAddress ,  doctorPhone ,  doctorEmail ,  doctorDOB ) VALUES
-(123456789, '123', 123, 'Mohd', 'Mazlan', 'kuala lumpur', '0173567758', 'lan.psis@gmail.com', '1990-04-10');
 
 -- --------------------------------------------------------
 
