@@ -72,7 +72,7 @@
             if(!$errMsg) {
                 //INSERT new appointment 
                 $query = " INSERT INTO appointment ( patient_id, therapist_id , start_time, end_time, confirmed, delivered) 
-                                VALUES ( 5, 1 , '$startDate', '$endDate', true, false) ";
+                                VALUES ( $userId, $therapist_id , '$startDate', '$endDate', true, false) ";
                 $appointment = mysqli_query($con, $query);
             }
         }

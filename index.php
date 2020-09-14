@@ -320,48 +320,26 @@ alert('User already registered. Please try again');
             <div class="container">
                 <div class="row">
                     <div class="col-md-5">
-                        <h2>Buchen Sir Ihren Termin!</h2>
-                        <p>Diese Termine sind noch frei. Bitte einloggen zum buchen.</p>
-                            
-                        <!-- date textbox -->
-                       
-                        <div class="input-group" style="margin-bottom:10px;">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar">
-                                </i>
-                            </div>
-                            <input class="form-control" id="date" name="date" value="<?php echo date("Y-m-d")?>" onchange="showUser(this.value)"/>
-                        </div>
-                       
-                        <!-- date textbox end -->
-
-                        <!-- script start -->
-                        <script>
-
-                            function showUser(str) {
-                                
-                                if (str == "") {
-                                    document.getElementById("txtHint").innerHTML = "";
-                                    return;
-                                } else { 
-                                    if (window.XMLHttpRequest) {
-                                        // code for IE7+, Firefox, Chrome, Opera, Safari
-                                        xmlhttp = new XMLHttpRequest();
-                                    } else {
-                                        // code for IE6, IE5
-                                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                                    }
-                                    xmlhttp.onreadystatechange = function() {
-                                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                                            document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-                                        }
-                                    };
-                                    xmlhttp.open("GET","getuser.php?q="+str,true);
-                                    console.log(str);
-                                    xmlhttp.send();
-                                }
-                            }
-                        </script>
+                        <h3>Einfach Online Reservieren!</h3>                        
+							<div >
+								<div class="panel-body">									
+									<em>Klicken Sie auf das Datum für verfügbare Zeiten</em>
+									<hr>
+									<div class="input-group" style="margin-bottom:10px;">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+										</div>
+										<input class="form-control" id="date" name="date" value="<?php echo date("Y-m-d")?>" onchange="showUser(this.value)"/>
+									</div>
+								</div>
+								<div class="panel-body">
+									<div id="txtHint"></div>
+								</div>
+							</div>
+				
+			
+	
+	
                         
                         <!-- script start end -->
                      
@@ -510,18 +488,43 @@ alert('User already registered. Please try again');
     <!-- date start -->
   
     <script>
-        $(document).ready(function(){
-            var date_input=$('input[name="date"]'); //our date input has the name "date"
-            var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-            date_input.datepicker({
-                format: 'yyyy-mm-dd',
-                container: container,
-                todayHighlight: true,
-                autoclose: true,
-            })
+			$(document).ready(function(){
+				var date_input=$('input[name="date"]'); //our date input has the name "date"
+				var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+				date_input.datepicker({
+				format: 'yyyy-mm-dd',
+				container: container,
+				todayHighlight: true,
+				autoclose: true,
+				})
+			});
+	</script>
+	<script>
+			function showUser(str) {		
+				if (str == "") {
+					document.getElementById("txtHint").innerHTML = "No data to be shown";
+					return;
+				} else {
+					if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+					xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+				}
 
-        })
-    </script>
+				};
+				xmlhttp.open("GET","patient/schedule.php?q="+str+"&version=preview",true);
+				console.log(str);
+				xmlhttp.send();
+				}
+			}
+		</script>
+
    
 </body>
 </html>

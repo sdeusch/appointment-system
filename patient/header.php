@@ -32,7 +32,7 @@
 									<a href="profile.php?patientId=<?php echo $userRow['patientEmail']; ?>"><i class="fa fa-fw fa-user"></i>Meine Daten</a>
 								</li>
 								<li>
-									<a href="patientapplist.php?patientId=<?php echo $userRow['patientEmail']; ?>"><i class="glyphicon glyphicon-calendar"></i> Meine Termine</a>
+									<a href="patientapplist.php"><i class="fa fa-fw fa-calendar"></i> Meine Termine</a>
 								</li>
 								<li class="divider"></li>
 								<li>

@@ -2,6 +2,8 @@
     session_start();
     include_once '../assets/conn/dbconnect.php';
     $q = $_GET['q'];
+    $simple = $_GET['version'] == 'preview' ? TRUE : FALSE;
+
     $res = mysqli_query($con,"select 
             t.id        as therapistId,
             s.id        as scheduleId,
@@ -36,26 +38,25 @@
                     echo " <th>Tag</th>";
                     echo "  <th colspan=2 style='text-align:center'>Zwischen</th>";
                     echo " <th>Kommentar</th>";
-                    echo "  <th>Reservieren</th>";
+                    echo "  <th></th>";
                 echo " </tr>";
             echo "  </thead>";
             echo "  <tbody>";
                 while($row = mysqli_fetch_array($res)) {
                 ?>
                     <tr>
-                        <?php                  
-                            // if ($rowapp['bookAvail']!="available") {
-                            // $btnstate="disabled";
-                            // } else {
-                            // $btnstate="";
-                            // }
+                        <?php                                              
                             echo "<td>" . $row['scheduleId'] . "</td>";
                             echo "<td>" . $row['firstName'] . " " . $row['lastName'] . "</td>";
                             echo "<td>" . $row['workDay'] . "</td>";
                             echo "<td>" . $row['startTime'] . "</td>";
                             echo "<td>" . $row['endTime'] . "</td>";
                             echo "<td>" . $row['comment'] . "</td>";
-                            echo "<td><a href='appointment.php?&id=" . $row['scheduleId'] . "&therapist_id=". $row['therapistId'] ."' class='btn btn-click btn-xs' role='button'>Book Now</a></td>";
+                            if(!$simple) {
+                               echo "<td><a href='appointment.php?&id=" . $row['scheduleId'] . "&therapist_id=". $row['therapistId'] ."' class='btn btn-click btn-xs' role='button'>Jetzt Buchen</a></td>";
+                            } else {
+                                 echo "<td></td>";
+                            }
                         ?>                        
                         </script>
                         <!-- ?> -->

@@ -8,7 +8,6 @@ header("Location: ../index.php");
 
 $usersession = $_SESSION['patientSession'];
 
-
 $res=mysqli_query($con,"SELECT * FROM patient WHERE patientEmail='".$usersession."'");
 
 if ($res===false) {
@@ -48,61 +47,26 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 col-md-8">
-											
-							<!-- notification end -->
-							<h2>Hallo <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?>, buchen Sie ihren Termin heute!</h2>
-							<div class="input-group" style="margin-bottom:10px;">
-								<div class="input-group-addon">
-									<i class="fa fa-calendar">
-									</i>
+						<div class="description">								
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<h4>Hallo <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?>, buchen Sie ihren Termin heute!</h4>
+									<em>Klicken Sie auf das Datum für verfügbare Termine</em>
+									<hr>
+									<div class="input-group" style="margin-bottom:10px;">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+										</div>
+										<input class="form-control" id="date" name="date" value="<?php echo date("Y-m-d")?>" onchange="showUser(this.value)"/>
+									</div>
 								</div>
-								<input class="form-control" id="date" name="date" value="<?php echo date("Y-m-d")?>" onchange="showUser(this.value)"/>
-							</div>
-						</div>
-						<!-- date textbox end -->
-						<!-- script start -->
-						<script>
-						function showUser(str) {
-						
-						if (str == "") {
-						document.getElementById("txtHint").innerHTML = "No data to be shown";
-						return;
-						} else {
-						if (window.XMLHttpRequest) {
-						// code for IE7+, Firefox, Chrome, Opera, Safari
-						xmlhttp = new XMLHttpRequest();
-						} else {
-						// code for IE6, IE5
-						xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-						}
-						xmlhttp.onreadystatechange = function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-						document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-						}
-						};
-						xmlhttp.open("GET","schedule.php?q="+str,true);
-						console.log(str);
-						xmlhttp.send();
-						}
-						}
-						</script>
-						
-						<!-- script start end -->
-						
-						<!-- table appointment start -->
-						<!-- <div class="container"> -->
-						<div class="container">
-							<div class="row">
-								<div class="col-xs-12 col-md-8">
+								<div class="panel-body">
 									<div id="txtHint"></div>
 								</div>
 							</div>
 						</div>
-						<!-- </div> -->
-						<!-- table appointment end -->
 					</div>
 				</div>
-				<!-- /.row -->
 			</div>
 		</section>
 		<!-- first section end -->
@@ -120,19 +84,41 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 		
 		<!-- date start -->
 		<script>
-		$(document).ready(function(){
-		var date_input=$('input[name="date"]'); //our date input has the name "date"
-		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-		date_input.datepicker({
-		format: 'yyyy-mm-dd',
-		container: container,
-		todayHighlight: true,
-		autoclose: true,
-		})
-		})
+			$(document).ready(function(){
+				var date_input=$('input[name="date"]'); //our date input has the name "date"
+				var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+				date_input.datepicker({
+				format: 'yyyy-mm-dd',
+				container: container,
+				todayHighlight: true,
+				autoclose: true,
+				})
+			});
 		</script>
-		<!-- date end -->
-		
-		
+		<script>
+			function showUser(str) {		
+				if (str == "") {
+					document.getElementById("txtHint").innerHTML = "No data to be shown";
+					return;
+				} else {
+					if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+					xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+				}
+
+				};
+				xmlhttp.open("GET","schedule.php?q="+str,true);
+				console.log(str);
+				xmlhttp.send();
+				}
+			}
+		</script>
 	</body>
 </html>
