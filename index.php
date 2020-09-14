@@ -112,7 +112,7 @@ alert('User already registered. Please try again');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <h3><a class="col-xs-2" href="index.php"> <span class="fa fa-spa">Tajik</span> </a></h3>
+                    <h3><a class="col-xs-2" href="index.php"> <span class="fa fa-spa">Deusch</span> </a></h3>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
