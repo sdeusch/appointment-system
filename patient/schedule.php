@@ -2,7 +2,11 @@
     session_start();
     include_once '../assets/conn/dbconnect.php';
     $q = $_GET['q'];
-    $simple = $_GET['version'] == 'preview' ? TRUE : FALSE;
+    if( isset($_GET['version']) && $_GET['version'] == 'preview') {
+       $simple = TRUE;
+    } else {
+        $simple = FALSE;
+    }
 
     $res = mysqli_query($con,"select 
             t.id        as therapistId,

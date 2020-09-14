@@ -191,7 +191,7 @@ alert('User already registered. Please try again');
                                         <label>Geburtstag</label>
                                         <div class="row">            
                                             <div class="col-xs-4 col-md-4">
-                                                <select name="day" class = "form-control input-lg" required>
+                                                <select name="day" class = "form-control input-lg"   style="line-height: 32px;" required>
                                                     <option value="">Tag</option>
                                                     <option value="01">1</option>
                                                     <option value="02">2</option>
@@ -227,7 +227,7 @@ alert('User already registered. Please try again');
                                                 </select>
                                             </div>                            
                                             <div class="col-xs-4 col-md-4">
-                                                <select name="month" class = "form-control input-lg" required>
+                                                <select name="month" class = "form-control input-lg" style="line-height: 32px;"  required>
                                                     <option value="">Monat</option>
                                                     <option value="01">Jänner</option>
                                                     <option value="02">Februar</option>
@@ -244,7 +244,7 @@ alert('User already registered. Please try again');
                                                 </select>
                                             </div>                                            
                                             <div class="col-xs-4 col-md-4">
-                                                <select name="year" class = "form-control input-lg" required>
+                                                <select name="year" class = "form-control input-lg" style="line-height: 32px;"  required>
                                                     <option value="">Jahr</option>
                                                     <option value="1981">1981</option>
                                                     <option value="1982">1982</option>

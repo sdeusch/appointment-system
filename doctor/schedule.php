@@ -187,7 +187,7 @@
                             </thead>
                             </tbody>
                                 <?php 
-                                $result=mysqli_query($con,"SELECT * FROM work_schedule");
+                                $result=mysqli_query($con,"SELECT * FROM work_schedule where therapist_id = ".$userRow['id']);
 
                                 while ($schedule=mysqli_fetch_array($result)) {             
                                         echo "<tr>";

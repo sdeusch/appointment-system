@@ -200,7 +200,7 @@
                                                         </div>
                                                         <div class="form-group form-group-lg">
                                                         <label class="control-label col-sm-2 requiredField" for="endtime">
-                                                        Notiz
+                                                        Behandlung 
                                                         </label>
                                                         <div class="col-sm-10">
                                                         <div class="input-group"  data-align="top">
